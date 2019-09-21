@@ -6,7 +6,7 @@ const LoginFrom = () => {
 
   const [id, setId] = useState('')
   const [password, setPassword] = useState('')
-  
+
   const onSubmitForm = useCallback((e) => {
     e.preventDefault();
   },[])
@@ -32,7 +32,7 @@ const LoginFrom = () => {
       <Input name="user-password" type="password" value={password} onChage={onChangePassword} required></Input>
     </div>
     <div>
-  <Button type="primary" htmlType="submit" loading={false}>로그인</Button>
+  <Button type="primary" htmlType="submit" loading={false} style={{marginTop:"10px"}}>로그인</Button>
   <Link href="/signup"><a><Button>회원가입</Button></a></Link>
 </div>
 </Form>
