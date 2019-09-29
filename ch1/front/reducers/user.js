@@ -1,5 +1,5 @@
 //intial State
-const inisitalState = {
+export const inisitalState = {
   isLoggedIn : false,
   user: {}
 }
@@ -9,12 +9,12 @@ const Log_In = 'Log_In'
 const Log_Out = 'Log_Out'
 
 //Action 의 결과 적기
-const loginAction = {
+export const loginAction = {
   type: Log_In,
   data: { nickname: "윤민수" }
 }
 
-const logoutAction = {
+export const logoutAction = {
   type : Log_Out,
 }
 
@@ -34,6 +34,13 @@ const reducer = ( state = inisitalState, action ) => {
         isLoggedIn: false,
         user : null
       }
+    }
+    default: {
+      return {
+        ...state,
+      }
     }  
   }
 }
+
+export default reducer;

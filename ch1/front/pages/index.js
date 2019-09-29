@@ -1,6 +1,8 @@
-import React from 'react';
-import PostForm from '../components/PostForm'
-import PostCard from '../components/PostCard'
+import React, { useEffect } from 'react';
+import PostForm from '../components/PostForm';
+import PostCard from '../components/PostCard';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginAction, logoutAction } from '../reducers/user';
 
 const dummy = {
   isLoggedIn : true,
@@ -16,8 +18,18 @@ const dummy = {
 }
 
 const Home = () => {
+  //dispatch는 setState의 역할을 함
+  const dispatch = useDispatch();
+  //useState의 역할을 함 
+  const { isLoggedIn, user } = useSelector( state => state.user );
+  useEffect( () => {
+    dispatch(loginAction);
+    dispatch(logoutAction);
+  },[]);
+
   return (
     <>
+    { user ? <div>로그인 되었습니다</div> : <div>로그아웃 되었습니다.</div>}
     {dummy.isLoggedIn && <PostForm dummy={dummy}/>}
     {dummy.mainPosts.map( (c) => {
           return (<PostCard post={c} key={c}/>)

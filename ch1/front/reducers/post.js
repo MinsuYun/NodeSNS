@@ -1,4 +1,4 @@
-const initialState = {
+export const initialState = {
   mainPost: [],
 }
 
@@ -10,20 +10,36 @@ const addPostAction = {
 };
 
 const addDummyAction = {
-  type: Add_Dummy
+  type: Add_Dummy,
+  data: {
+    content : 'Hello',
+    UserId: 1,
+    User: {
+      nickname: '윤종환'
+    }
+  }
 };
 
 const reducer = ( state = initialState, action) => {
   switch(action.type) {
     case Add_Post : {
       return {
-        mainPost : []
+        ...state,
+        mainPost : [...state.mainPost]
       }
     }
     case Add_Dummy: {
       return {
-        mainPost: []
+        ...state,
+        mainPost: [...state.mainPost]
       }
     };
+    default: {
+      return {
+        ...state,
+      }
+    }
   };
 };
+
+export default reducer;
