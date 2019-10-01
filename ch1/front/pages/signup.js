@@ -2,8 +2,8 @@ import React, { useState, useCallback } from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 
 const Signup = () => {
-  
   //state 기본
+  //state를 처음 설정할 때는 기본적으로 useState를 통해 초기 셋팅을 한다.
   const [id, setId] = useState('');
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');

@@ -1,22 +1,17 @@
 import React from 'react';
 import { Menu, Input, Button, Row, Col } from 'antd';
 import Link from 'next/link';
-import LoginForm from './LoginFrom'
-import UserProfile from './UserProfile'
+import { useSelector } from 'react-redux';
+import LoginForm from './LoginFrom';
+import UserProfile from './UserProfile';
 
-const dummy = {
-  nickname : "윤민수",
-  Post: [],
-  Followings: ['민수','민아','아빠'],
-  Followers: [],
-  isLoggedIn : false
-};
 
+//여기서 children은 각각 개별 page들을 의미한다. pages/_app.js 에서 <Component />를 AppLayout로 감싸줌과 동시에 AppLayout 컴포턴트에서도 children을 불러와야한다.
 const AppLayout = ({ children }) => {
 
+  const { isLoggedIn } = useSelector ( state => state.user );
   // const onChangeId = () => {}
   // const onChangePassword = () => {}
-
   return (
     <div>
       <Menu mode="horizontal">
@@ -30,7 +25,7 @@ const AppLayout = ({ children }) => {
       <Row gutter={15}>
         {/* 전체화면 24 */}
         <Col xs={24} md={8}>
-          {dummy.isLoggedIn ? 
+          {isLoggedIn ? 
         <UserProfile />
           :
         <LoginForm />

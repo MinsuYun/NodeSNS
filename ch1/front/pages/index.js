@@ -1,37 +1,26 @@
 import React, { useEffect } from 'react';
 import PostForm from '../components/PostForm';
 import PostCard from '../components/PostCard';
-import { useDispatch, useSelector } from 'react-redux';
-import { loginAction, logoutAction } from '../reducers/user';
+import {  useSelector } from 'react-redux';
+ 
 
-const dummy = {
-  isLoggedIn : true,
-  imagePaths : [],
-  mainPosts : [{
-    User: {
-      id: 1,
-      nickname: '윤민수',
-    },
-    content: '첫 번째 게시글',
-    img: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=http%3A%2F%2Fcfile23.uf.tistory.com%2Fimage%2F2657B9505809B4B634FF66'
-  }]
-}
+//index.js 모든 page들 중에서 첫 화면을 나타낸다.
+
+//useEffect는 hooks 에서 componentDidMount역할을 한다.
+//dispatch는 redux에서 setState를 하기 위해 필요한 action을 실행시켜주는 함수이다.
+//이 dispatch를 쓰기 위해서는 useDispatch 를 import 해와야 한다.
+//useSelector는 store에서 원하는 state값을 불러올 때 쓰는 함수이다.
 
 const Home = () => {
-  //dispatch는 setState의 역할을 함
-  const dispatch = useDispatch();
-  //useState의 역할을 함 
-  const { isLoggedIn, user } = useSelector( state => state.user );
-  useEffect( () => {
-    dispatch(loginAction);
-    dispatch(logoutAction);
-  },[]);
+  //dispatch는 action을 실행시키는 역할을 함
+  //useSelector는 store에서 원하는 state값을 불러오는 역할을 한다.
+  const { isLoggedIn } = useSelector( state => state.user );
+  const { mainPosts } = useSelector( state => state.post );
 
   return (
     <>
-    { user ? <div>로그인 되었습니다</div> : <div>로그아웃 되었습니다.</div>}
-    {dummy.isLoggedIn && <PostForm dummy={dummy}/>}
-    {dummy.mainPosts.map( (c) => {
+    { isLoggedIn && <PostForm />}
+    { mainPosts.map( (c) => {
           return (<PostCard post={c} key={c}/>)
         })}
     </>

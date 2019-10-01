@@ -108,8 +108,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! next/link */ "./node_modules/next/link.js");
 /* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _LoginFrom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./LoginFrom */ "./components/LoginFrom.js");
-/* harmony import */ var _UserProfile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./UserProfile */ "./components/UserProfile.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "react-redux");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _LoginFrom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./LoginFrom */ "./components/LoginFrom.js");
+/* harmony import */ var _UserProfile__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./UserProfile */ "./components/UserProfile.js");
 var _jsxFileName = "/home/minsu/\uBC14\uD0D5\uD654\uBA74/sns/ch1/front/components/AppLayout.js";
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
@@ -117,77 +119,74 @@ var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
 
 
-const dummy = {
-  nickname: "윤민수",
-  Post: [],
-  Followings: ['민수', '민아', '아빠'],
-  Followers: [],
-  isLoggedIn: false
-};
+ //여기서 children은 각각 개별 page들을 의미한다. pages/_app.js 에서 <Component />를 AppLayout로 감싸줌과 동시에 AppLayout 컴포턴트에서도 children을 불러와야한다.
 
 const AppLayout = ({
   children
 }) => {
-  // const onChangeId = () => {}
+  const {
+    isLoggedIn
+  } = Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["useSelector"])(state => state.user); // const onChangeId = () => {}
   // const onChangePassword = () => {}
+
   return __jsx("div", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 21
+      lineNumber: 16
     },
     __self: undefined
   }, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Menu"], {
     mode: "horizontal",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 22
+      lineNumber: 17
     },
     __self: undefined
   }, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Menu"].Item, {
     key: "home",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 23
+      lineNumber: 18
     },
     __self: undefined
   }, __jsx(next_link__WEBPACK_IMPORTED_MODULE_2___default.a, {
     href: "/",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 23
+      lineNumber: 18
     },
     __self: undefined
   }, __jsx("a", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 23
+      lineNumber: 18
     },
     __self: undefined
   }, "\uB178\uB4DC\uBC84\uB4DC"))), __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Menu"].Item, {
     key: "profile",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 24
+      lineNumber: 19
     },
     __self: undefined
   }, __jsx(next_link__WEBPACK_IMPORTED_MODULE_2___default.a, {
     href: "/profile",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 24
+      lineNumber: 19
     },
     __self: undefined
   }, __jsx("a", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 24
+      lineNumber: 19
     },
     __self: undefined
   }, "\uD504\uB85C\uD544"))), __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Menu"].Item, {
     key: "mail",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 25
+      lineNumber: 20
     },
     __self: undefined
   }, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Input"].Search, {
@@ -197,40 +196,40 @@ const AppLayout = ({
     },
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 26
+      lineNumber: 21
     },
     __self: undefined
   })), __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Menu"].Item, {
     key: "signup",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 28
+      lineNumber: 23
     },
     __self: undefined
   }, __jsx(next_link__WEBPACK_IMPORTED_MODULE_2___default.a, {
     href: "/signup",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 28
+      lineNumber: 23
     },
     __self: undefined
   }, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Button"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 28
+      lineNumber: 23
     },
     __self: undefined
   }, __jsx("a", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 28
+      lineNumber: 23
     },
     __self: undefined
   }, "\uD68C\uC6D0\uAC00\uC785"))))), __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Row"], {
     gutter: 15,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 30
+      lineNumber: 25
     },
     __self: undefined
   }, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Col"], {
@@ -238,19 +237,19 @@ const AppLayout = ({
     md: 8,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 32
+      lineNumber: 27
     },
     __self: undefined
-  }, dummy.isLoggedIn ? __jsx(_UserProfile__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, isLoggedIn ? __jsx(_UserProfile__WEBPACK_IMPORTED_MODULE_5__["default"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 34
+      lineNumber: 29
     },
     __self: undefined
-  }) : __jsx(_LoginFrom__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  }) : __jsx(_LoginFrom__WEBPACK_IMPORTED_MODULE_4__["default"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 36
+      lineNumber: 31
     },
     __self: undefined
   })), __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Col"], {
@@ -258,7 +257,7 @@ const AppLayout = ({
     md: 12,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 39
+      lineNumber: 34
     },
     __self: undefined
   }, children), __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Col"], {
@@ -266,7 +265,7 @@ const AppLayout = ({
     md: 8,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 42
+      lineNumber: 37
     },
     __self: undefined
   })));
@@ -291,8 +290,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! next/link */ "./node_modules/next/link.js");
 /* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "react-redux");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _reducers_user__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../reducers/user */ "./reducers/user.js");
 var _jsxFileName = "/home/minsu/\uBC14\uD0D5\uD654\uBA74/sns/ch1/front/components/LoginFrom.js";
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
+
+
 
 
 
@@ -306,14 +310,16 @@ const LoginFrom = () => {
     0: password,
     1: setPassword
   } = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])('');
+  const dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["useDispatch"])();
   const onSubmitForm = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(e => {
     e.preventDefault();
+    dispatch(_reducers_user__WEBPACK_IMPORTED_MODULE_4__["loginAction"]);
   }, []);
   const onChangeId = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(e => {
-    setId(e.value);
+    setId(e.target.value);
   }, []);
   const onChangePassword = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(e => {
-    setPassword(e.value);
+    setPassword(e.target.value);
   }, []);
   return __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Form"], {
     onSubmit: onSubmitForm,
@@ -322,26 +328,26 @@ const LoginFrom = () => {
     },
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 23
+      lineNumber: 27
     },
     __self: undefined
   }, __jsx("div", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 24
+      lineNumber: 28
     },
     __self: undefined
   }, __jsx("label", {
     htmlFor: "user-id",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 25
+      lineNumber: 29
     },
     __self: undefined
   }, "\uC544\uC774\uB514"), __jsx("br", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 26
+      lineNumber: 30
     },
     __self: undefined
   }), __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Input"], {
@@ -351,43 +357,43 @@ const LoginFrom = () => {
     required: true,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 27
+      lineNumber: 31
     },
     __self: undefined
   })), __jsx("div", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 29
+      lineNumber: 33
     },
     __self: undefined
   }, __jsx("label", {
     htmlFor: "user-password",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 30
+      lineNumber: 34
     },
     __self: undefined
   }, "\uBE44\uBC00\uBC88\uD638"), __jsx("br", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 31
+      lineNumber: 35
     },
     __self: undefined
   }), __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Input"], {
     name: "user-password",
     type: "password",
     value: password,
-    onChage: onChangePassword,
+    onChange: onChangePassword,
     required: true,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 32
+      lineNumber: 36
     },
     __self: undefined
   })), __jsx("div", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 34
+      lineNumber: 38
     },
     __self: undefined
   }, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Button"], {
@@ -399,26 +405,26 @@ const LoginFrom = () => {
     },
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 35
+      lineNumber: 39
     },
     __self: undefined
   }, "\uB85C\uADF8\uC778"), __jsx(next_link__WEBPACK_IMPORTED_MODULE_2___default.a, {
     href: "/signup",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 36
+      lineNumber: 40
     },
     __self: undefined
   }, __jsx("a", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 36
+      lineNumber: 40
     },
     __self: undefined
   }, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Button"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 36
+      lineNumber: 40
     },
     __self: undefined
   }, "\uD68C\uC6D0\uAC00\uC785")))));
@@ -441,73 +447,92 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! antd */ "antd");
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "react-redux");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_redux__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _reducers_user__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../reducers/user */ "./reducers/user.js");
 var _jsxFileName = "/home/minsu/\uBC14\uD0D5\uD654\uBA74/sns/ch1/front/components/UserProfile.js";
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
 
 
+
+
 const UserProfile = () => {
+  const {
+    user
+  } = Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["useSelector"])(state => state.user);
+  const dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["useDispatch"])();
+  const onLogout = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(() => {
+    dispatch(_reducers_user__WEBPACK_IMPORTED_MODULE_3__["logoutAction"]);
+  }, []);
   return __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Card"], {
     actions: [__jsx("div", {
       key: "twit",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 9
+        lineNumber: 19
       },
       __self: undefined
     }, "\uC9F9\uC9F9", __jsx("br", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 9
+        lineNumber: 19
       },
       __self: undefined
-    }), dummy.Post.length), __jsx("div", {
+    }), user.Post.length), __jsx("div", {
       key: "following",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 10
+        lineNumber: 20
       },
       __self: undefined
     }, "\uD314\uB85C\uC789", __jsx("br", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 10
+        lineNumber: 20
       },
       __self: undefined
-    }), dummy.Followings.length), __jsx("div", {
+    }), user.Followings.length), __jsx("div", {
       key: "follower",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 11
+        lineNumber: 21
       },
       __self: undefined
     }, "\uD314\uB85C\uC6CC", __jsx("br", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 11
+        lineNumber: 21
       },
       __self: undefined
-    }), dummy.Followers.length)],
+    }), user.Followers.length)],
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 7
+      lineNumber: 17
     },
     __self: undefined
   }, __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Card"].Meta, {
     avatar: __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Avatar"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 14
+        lineNumber: 24
       },
       __self: undefined
-    }, dummy.nickname[0]),
-    title: dummy.nickname,
+    }, user.nickname[0]),
+    title: user.nickname,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 13
+      lineNumber: 23
     },
     __self: undefined
-  }));
+  }), __jsx(antd__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+    onClick: onLogout,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 27
+    },
+    __self: undefined
+  }, "\uB85C\uADF8\uC544\uC6C3"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (UserProfile);
@@ -1314,19 +1339,19 @@ const NodeBird = ({
     store: store,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 13
+      lineNumber: 14
     },
     __self: undefined
   }, __jsx(next_head__WEBPACK_IMPORTED_MODULE_1___default.a, {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 14
+      lineNumber: 16
     },
     __self: undefined
   }, __jsx("title", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 15
+      lineNumber: 17
     },
     __self: undefined
   }, "NodeBird"), __jsx("link", {
@@ -1334,34 +1359,37 @@ const NodeBird = ({
     href: "https://cdnjs.cloudflare.com/ajax/libs/antd/3.23.3/antd.css",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 16
+      lineNumber: 18
     },
     __self: undefined
   }), __jsx("script", {
     src: "https://cdnjs.cloudflare.com/ajax/libs/antd/3.23.3/antd.js",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 17
+      lineNumber: 19
     },
     __self: undefined
   })), __jsx(_components_AppLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 19
+      lineNumber: 23
     },
     __self: undefined
   }, __jsx(Component, {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 20
+      lineNumber: 24
     },
     __self: undefined
   }))));
-};
+}; //그냥 외우는 부분이다. redux 에서 조금 더 강화된 기능들을 쓰고 싶다면 이 작업을 시행히야 한다. 리덕스 dev tools , Redux Saga 등을 사용하기 위해서는 이렇게 Redux 기본 기능에 여러 기능들을 합성시켜줘야한다.
+//그리고 해당 부분에서 stroe를 생성해줘야 const store = createStore( reducer, initialState, enhancer )을 생성하여 return 까지 해줘야 전체 페이지에서 Store에 접근할 수 있게 된다.
+
 
 /* harmony default export */ __webpack_exports__["default"] = (next_redux_wrapper__WEBPACK_IMPORTED_MODULE_6___default()((initialState, options) => {
   const middlewares = [];
-  const enhancer = Object(redux__WEBPACK_IMPORTED_MODULE_3__["compose"])(Object(redux__WEBPACK_IMPORTED_MODULE_3__["applyMiddleware"])(...middlewares), !options.isServer && window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined' ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f);
+  const enhancer = Object(redux__WEBPACK_IMPORTED_MODULE_3__["compose"])(Object(redux__WEBPACK_IMPORTED_MODULE_3__["applyMiddleware"])(...middlewares), !options.isServer && window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined' ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f); //store를 여기서 맨들어야함
+
   const store = Object(redux__WEBPACK_IMPORTED_MODULE_3__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_5__["default"], initialState, enhancer);
   return store;
 })(NodeBird));
@@ -1381,6 +1409,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(redux__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _user__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./user */ "./reducers/user.js");
 /* harmony import */ var _post__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./post */ "./reducers/post.js");
+//react-redux에서 기본적인 redux flow는 아래와 같다
+//1. initialState에서 state 초기값을 셋팅해준다.
+//2. action은 "~~했을 때, state값을 ~~ 로 바꿔라" 라고 하는 주문서 역할을 한다.
+//3. action을 실행하기 위해서는 dispatch함수가 필요하다
+//4. dispatch가 action 주문서에 담긴 내용을 reducer에게 전달해준다.
+//5. 최종적으로 reducer가 store에 initialState값에 있던 각각의 state값을 action에 적혀있던 주문서 내용대로 setState하게 된다.
+//각각의 기능별로 분리되어있던 initialState, action, reducer 중에서 reducer들을 한곳으로 묶는 역할을 한다.
 
 
  //각 파일에 있는 Reducer들을 combineReducer로 묶어서 rootReducer에서 관리 함
@@ -1406,7 +1441,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/objectSpread */ "./node_modules/@babel/runtime-corejs2/helpers/esm/objectSpread.js");
 
 const initialState = {
-  mainPost: []
+  mainPosts: [{
+    User: {
+      id: 1,
+      nickname: '윤민수'
+    },
+    content: '첫 번째 게시글',
+    img: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=http%3A%2F%2Fcfile23.uf.tistory.com%2Fimage%2F2657B9505809B4B634FF66'
+  }],
+  imagePaths: []
 };
 const Add_Post = "Add_Post";
 const Add_Dummy = "Add_Dummy";
@@ -1458,42 +1501,49 @@ const reducer = (state = initialState, action) => {
 /*!**************************!*\
   !*** ./reducers/user.js ***!
   \**************************/
-/*! exports provided: inisitalState, loginAction, logoutAction, default */
+/*! exports provided: initialState, loginAction, logoutAction, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "inisitalState", function() { return inisitalState; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initialState", function() { return initialState; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loginAction", function() { return loginAction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logoutAction", function() { return logoutAction; });
 /* harmony import */ var _babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/objectSpread */ "./node_modules/@babel/runtime-corejs2/helpers/esm/objectSpread.js");
 
-//intial State
-const inisitalState = {
+//dummy User
+const dummyUser = {
+  nickname: "윤민수",
+  Post: [],
+  Followings: [],
+  Followers: []
+}; //intial State
+
+const initialState = {
   isLoggedIn: false,
-  user: {}
+  user: null
 }; //Action 이름정하기
 
 const Log_In = 'Log_In';
 const Log_Out = 'Log_Out'; //Action 의 결과 적기
+//여기서 type이 정말 중요하다.
+//data 는 state값에 들어갈 데이터들을 정의해주는 곳이다.
 
 const loginAction = {
-  type: Log_In,
-  data: {
-    nickname: "윤민수"
-  }
+  type: Log_In
 };
 const logoutAction = {
   type: Log_Out
 }; //reducer 생성
+//반드시 reducer는 action의 값을 받아 initialState를 바꿔주는 역할을 하기에 인자로써, initialState와 action을 넣어준다
 
-const reducer = (state = inisitalState, action) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case Log_In:
       {
         return Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__["default"])({}, state, {
           isLoggedIn: true,
-          user: action.data
+          user: dummyUser
         });
       }
 
