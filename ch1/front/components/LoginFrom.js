@@ -12,8 +12,8 @@ const LoginFrom = () => {
 
   const onSubmitForm = useCallback((e) => {
     e.preventDefault();
-    dispatch(loginAction);
-  },[])
+    dispatch(loginAction({id, password}));
+  },[id, password])
 
   const onChangeId = useCallback((e) => {
     setId(e.target.value)

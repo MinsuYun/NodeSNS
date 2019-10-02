@@ -1,0 +1,39 @@
+{
+  "ast": null,
+  "code": "import { all, fork, takeLatest, call, put, take } from 'redux-saga/effects';\nimport { LOG_IN, LOG_IN_SUCCESS, LOG_IN_FAILURE } from '../reducers/user';\nconst HELLO_SAGA = 'HELLO_SAGA'; //서버에 요청 보내는 부분\n\nfunction loginAPI() {}\n\nfunction* login() {\n  try {\n    yield delay(4);\n    yield put({\n      type: LOG_IN_SUCCESS\n    });\n  } catch (e) {\n    console.error(e);\n    yield put({\n      type: LOG_IN_FAILURE\n    });\n  }\n}\n\nfunction* watchLogin() {\n  yield takeLAtest(LOG_IN, login);\n}\n\n;\n\nfunction* watchHello() {\n  //take는 해당 action이 dispatch되면 제네레이터를 next하는 effect이다\n  console.log('before saga');\n\n  while (true) {\n    yield take(HELLO_SAGA);\n    console.log('Hello Saga');\n  }\n}\n\nexport default function* userSaga() {\n  yield all(watchHello(), watchLogin(), watchSignUp());\n}",
+  "map": {
+    "version": 3,
+    "sources": ["/home/minsu/바탕화면/sns/ch1/front/sagas/user.js"],
+    "names": [
+      "all",
+      "fork",
+      "takeLatest",
+      "call",
+      "put",
+      "take",
+      "LOG_IN",
+      "LOG_IN_SUCCESS",
+      "LOG_IN_FAILURE",
+      "HELLO_SAGA",
+      "loginAPI",
+      "login",
+      "delay",
+      "type",
+      "e",
+      "console",
+      "error",
+      "watchLogin",
+      "takeLAtest",
+      "watchHello",
+      "log",
+      "userSaga",
+      "watchSignUp"
+    ],
+    "mappings": "AAAA,SAASA,GAAT,EAAcC,IAAd,EAAoBC,UAApB,EAAgCC,IAAhC,EAAsCC,GAAtC,EAA2CC,IAA3C,QAAuD,oBAAvD;AACA,SAASC,MAAT,EAAiBC,cAAjB,EAAiCC,cAAjC,QAAuD,kBAAvD;AAEA,MAAMC,UAAU,GAAG,YAAnB,C,CAEA;;AACA,SAASC,QAAT,GAAoB,CAEnB;;AAED,UAAUC,KAAV,GAAkB;AAChB,MAAI;AACF,UAAMC,KAAK,CAAC,CAAD,CAAX;AACA,UAAMR,GAAG,CAAC;AACRS,MAAAA,IAAI,EAAEN;AADE,KAAD,CAAT;AAGD,GALD,CAKE,OAAOO,CAAP,EAAU;AACVC,IAAAA,OAAO,CAACC,KAAR,CAAcF,CAAd;AACA,UAAMV,GAAG,CAAC;AACRS,MAAAA,IAAI,EAAEL;AADE,KAAD,CAAT;AAGD;AACF;;AAED,UAAUS,UAAV,GAAuB;AACrB,QAAMC,UAAU,CAACZ,MAAD,EAASK,KAAT,CAAhB;AACD;;AAAA;;AAED,UAAUQ,UAAV,GAAuB;AACrB;AACAJ,EAAAA,OAAO,CAACK,GAAR,CAAY,aAAZ;;AACA,SAAO,IAAP,EAAa;AACX,UAAMf,IAAI,CAACI,UAAD,CAAV;AACAM,IAAAA,OAAO,CAACK,GAAR,CAAY,YAAZ;AACD;AACF;;AAED,eAAe,UAAUC,QAAV,GAAqB;AAClC,QAAMrB,GAAG,CACPmB,UAAU,EADH,EAEPF,UAAU,EAFH,EAGPK,WAAW,EAHJ,CAAT;AAKD",
+    "sourcesContent": [
+      "import { all, fork, takeLatest, call, put, take } from 'redux-saga/effects';\nimport { LOG_IN, LOG_IN_SUCCESS, LOG_IN_FAILURE } from '../reducers/user';\n\nconst HELLO_SAGA = 'HELLO_SAGA';\n\n//서버에 요청 보내는 부분\nfunction loginAPI() {\n  \n}\n\nfunction* login() {\n  try {\n    yield delay(4);\n    yield put({\n      type: LOG_IN_SUCCESS\n    })\n  } catch (e) {\n    console.error(e);\n    yield put({\n      type: LOG_IN_FAILURE\n    });\n  }\n}\n\nfunction* watchLogin() {\n  yield takeLAtest(LOG_IN, login)\n};\n\nfunction* watchHello() {\n  //take는 해당 action이 dispatch되면 제네레이터를 next하는 effect이다\n  console.log('before saga');\n  while (true) {\n    yield take(HELLO_SAGA);\n    console.log('Hello Saga')\n  } \n}\n\nexport default function* userSaga() {\n  yield all(\n    watchHello(),\n    watchLogin(),\n    watchSignUp(),\n  )\n}"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}

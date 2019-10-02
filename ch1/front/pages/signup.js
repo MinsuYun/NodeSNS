@@ -1,7 +1,11 @@
 import React, { useState, useCallback } from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
+import { signupAction } from '../reducers/user';
 
 const Signup = () => {
+
+  const dispatch = useDispatch();
   //state 기본
   //state를 처음 설정할 때는 기본적으로 useState를 통해 초기 셋팅을 한다.
   const [id, setId] = useState('');
@@ -15,6 +19,9 @@ const Signup = () => {
 
   const onSubmit = useCallback((e) => {
     e.preventDefault()
+    dispatch(signupAction({
+      id, password, nickname
+    }));
     //검증로직
     if(password !== passwordCheck) {
       return setPasswordError(true);

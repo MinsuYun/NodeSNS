@@ -5,7 +5,11 @@ import AppLayout from '../components/AppLayout';
 import { createStore, compose, applyMiddleware } from 'redux';
 import  { Provider } from 'react-redux';
 import reducer from '../reducers';
+//리덕스의 기능을 업그레이드 하기 위해 withRedux Import해옴
 import withRedux from 'next-redux-wrapper';
+//ReduxSaga를 사용하기 위해 createSagaMiddleware를 Import
+import createSagaMiddleware from 'redux-saga';
+import rootSaga from '../sagas';
 
 const NodeBird = ({ Component, store }) => {
   return (
@@ -30,14 +34,19 @@ const NodeBird = ({ Component, store }) => {
 
 //그냥 외우는 부분이다. redux 에서 조금 더 강화된 기능들을 쓰고 싶다면 이 작업을 시행히야 한다. 리덕스 dev tools , Redux Saga 등을 사용하기 위해서는 이렇게 Redux 기본 기능에 여러 기능들을 합성시켜줘야한다.
 //그리고 해당 부분에서 stroe를 생성해줘야 const store = createStore( reducer, initialState, enhancer )을 생성하여 return 까지 해줘야 전체 페이지에서 Store에 접근할 수 있게 된다.
-export default withRedux((initialState, options) => {
-  const middlewares = [];
-  const enhancer = compose(
-    applyMiddleware(...middlewares),
-    !options.isServer && window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined' ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f,
-  )
-  //store를 여기서 맨들어야함
-  const store = createStore( reducer, initialState, enhancer );
+const configureStore = (initialState, options) => {
+  const sagaMiddleware = createSagaMiddleware();
+  const middlewares = [sagaMiddleware];
+  //배포를 하면 !options 이부분 가려줘야함. -->왜냐면 배포했는데, state에 어떠한 정보가 담겨있는지 사용자들에게 모두 공개되기 때문에
+  const enhancer = process.env.NODE_ENV === 'production'
+    ? compose(applyMiddleware(...middlewares))
+    : compose(
+      applyMiddleware(...middlewares),
+      !options.isServer && typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined' ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f,
+    );
+  const store = createStore(reducer, initialState, enhancer);
+  sagaMiddleware.run(rootSaga);
   return store;
-})(NodeBird);
+};
 
+export default withRedux(configureStore)(NodeBird);

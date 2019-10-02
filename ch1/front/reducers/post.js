@@ -10,14 +10,14 @@ export const initialState = {
   imagePaths: []
 }
 
-const Add_Post = "Add_Post";
-const Add_Dummy = "Add_Dummy";
+export const Add_Post = "Add_Post";
+export const Add_Dummy = "Add_Dummy";
 
-const addPostAction = {
+export const addPostAction = {
   type: Add_Post
 };
 
-const addDummyAction = {
+export const addDummyAction = {
   type: Add_Dummy,
   data: {
     content : 'Hello',

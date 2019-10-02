@@ -313,8 +313,11 @@ const LoginFrom = () => {
   const dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["useDispatch"])();
   const onSubmitForm = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(e => {
     e.preventDefault();
-    dispatch(_reducers_user__WEBPACK_IMPORTED_MODULE_4__["loginAction"]);
-  }, []);
+    dispatch(Object(_reducers_user__WEBPACK_IMPORTED_MODULE_4__["loginAction"])({
+      id,
+      password
+    }));
+  }, [id, password]);
   const onChangeId = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(e => {
     setId(e.target.value);
   }, []);
@@ -1320,6 +1323,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _reducers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../reducers */ "./reducers/index.js");
 /* harmony import */ var next_redux_wrapper__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! next-redux-wrapper */ "next-redux-wrapper");
 /* harmony import */ var next_redux_wrapper__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(next_redux_wrapper__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var redux_saga__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! redux-saga */ "redux-saga");
+/* harmony import */ var redux_saga__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(redux_saga__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _sagas__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../sagas */ "./sagas/index.js");
 var _jsxFileName = "/home/minsu/\uBC14\uD0D5\uD654\uBA74/sns/ch1/front/pages/_app.js";
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
@@ -1327,6 +1333,10 @@ var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
  //redux 연결하기
 
 
+
+ //리덕스의 기능을 업그레이드 하기 위해 withRedux Import해옴
+
+ //ReduxSaga를 사용하기 위해 createSagaMiddleware를 Import
 
 
 
@@ -1339,19 +1349,19 @@ const NodeBird = ({
     store: store,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 14
+      lineNumber: 18
     },
     __self: undefined
   }, __jsx(next_head__WEBPACK_IMPORTED_MODULE_1___default.a, {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 16
+      lineNumber: 20
     },
     __self: undefined
   }, __jsx("title", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 17
+      lineNumber: 21
     },
     __self: undefined
   }, "NodeBird"), __jsx("link", {
@@ -1359,26 +1369,26 @@ const NodeBird = ({
     href: "https://cdnjs.cloudflare.com/ajax/libs/antd/3.23.3/antd.css",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 18
+      lineNumber: 22
     },
     __self: undefined
   }), __jsx("script", {
     src: "https://cdnjs.cloudflare.com/ajax/libs/antd/3.23.3/antd.js",
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 19
+      lineNumber: 23
     },
     __self: undefined
   })), __jsx(_components_AppLayout__WEBPACK_IMPORTED_MODULE_2__["default"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 23
+      lineNumber: 27
     },
     __self: undefined
   }, __jsx(Component, {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 24
+      lineNumber: 28
     },
     __self: undefined
   }))));
@@ -1386,13 +1396,17 @@ const NodeBird = ({
 //그리고 해당 부분에서 stroe를 생성해줘야 const store = createStore( reducer, initialState, enhancer )을 생성하여 return 까지 해줘야 전체 페이지에서 Store에 접근할 수 있게 된다.
 
 
-/* harmony default export */ __webpack_exports__["default"] = (next_redux_wrapper__WEBPACK_IMPORTED_MODULE_6___default()((initialState, options) => {
-  const middlewares = [];
-  const enhancer = Object(redux__WEBPACK_IMPORTED_MODULE_3__["compose"])(Object(redux__WEBPACK_IMPORTED_MODULE_3__["applyMiddleware"])(...middlewares), !options.isServer && window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined' ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f); //store를 여기서 맨들어야함
+const configureStore = (initialState, options) => {
+  const sagaMiddleware = redux_saga__WEBPACK_IMPORTED_MODULE_7___default()();
+  const middlewares = [sagaMiddleware]; //배포를 하면 !options 이부분 가려줘야함. -->왜냐면 배포했는데, state에 어떠한 정보가 담겨있는지 사용자들에게 모두 공개되기 때문에
 
+  const enhancer =  false ? undefined : Object(redux__WEBPACK_IMPORTED_MODULE_3__["compose"])(Object(redux__WEBPACK_IMPORTED_MODULE_3__["applyMiddleware"])(...middlewares), !options.isServer && typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined' ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f);
   const store = Object(redux__WEBPACK_IMPORTED_MODULE_3__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_5__["default"], initialState, enhancer);
+  sagaMiddleware.run(_sagas__WEBPACK_IMPORTED_MODULE_8__["default"]);
   return store;
-})(NodeBird));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (next_redux_wrapper__WEBPACK_IMPORTED_MODULE_6___default()(configureStore)(NodeBird));
 
 /***/ }),
 
@@ -1432,12 +1446,16 @@ const rootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"]
 /*!**************************!*\
   !*** ./reducers/post.js ***!
   \**************************/
-/*! exports provided: initialState, default */
+/*! exports provided: initialState, Add_Post, Add_Dummy, addPostAction, addDummyAction, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initialState", function() { return initialState; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Add_Post", function() { return Add_Post; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Add_Dummy", function() { return Add_Dummy; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addPostAction", function() { return addPostAction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addDummyAction", function() { return addDummyAction; });
 /* harmony import */ var _babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/objectSpread */ "./node_modules/@babel/runtime-corejs2/helpers/esm/objectSpread.js");
 
 const initialState = {
@@ -1501,14 +1519,22 @@ const reducer = (state = initialState, action) => {
 /*!**************************!*\
   !*** ./reducers/user.js ***!
   \**************************/
-/*! exports provided: initialState, loginAction, logoutAction, default */
+/*! exports provided: initialState, LOG_IN, LOG_OUT, SIGN_UP, LOG_IN_SUCCESS, LOG_IN_FAILURE, loginAction, logoutAction, signupAction, loginSuccessAction, loginSuccessFailureAction, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initialState", function() { return initialState; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOG_IN", function() { return LOG_IN; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOG_OUT", function() { return LOG_OUT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SIGN_UP", function() { return SIGN_UP; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOG_IN_SUCCESS", function() { return LOG_IN_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOG_IN_FAILURE", function() { return LOG_IN_FAILURE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loginAction", function() { return loginAction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logoutAction", function() { return logoutAction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "signupAction", function() { return signupAction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loginSuccessAction", function() { return loginSuccessAction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loginSuccessFailureAction", function() { return loginSuccessFailureAction; });
 /* harmony import */ var _babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/objectSpread */ "./node_modules/@babel/runtime-corejs2/helpers/esm/objectSpread.js");
 
 //dummy User
@@ -1521,38 +1547,76 @@ const dummyUser = {
 
 const initialState = {
   isLoggedIn: false,
-  user: null
+  user: null,
+  signupData: {},
+  loginData: {}
 }; //Action 이름정하기
 
-const Log_In = 'Log_In';
-const Log_Out = 'Log_Out'; //Action 의 결과 적기
+const LOG_IN = 'LOG_IN';
+const LOG_OUT = 'LOG_OUT';
+const SIGN_UP = 'SIGN_UP';
+const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
+const LOG_IN_FAILURE = 'LOG_IN_FAILURE'; //Action 의 결과 적기
 //여기서 type이 정말 중요하다.
 //data 는 state값에 들어갈 데이터들을 정의해주는 곳이다.
 
-const loginAction = {
-  type: Log_In
+const loginAction = data => {
+  return {
+    type: LOG_IN,
+    data: data
+  };
 };
 const logoutAction = {
-  type: Log_Out
+  type: LOG_OUT
+};
+const signupAction = data => {
+  return {
+    type: SIGN_UP,
+    data: data
+  };
+};
+const loginSuccessAction = {
+  type: LOG_IN_SUCCESS
+};
+const loginSuccessFailureAction = {
+  type: LOG_IN_FAILURE
 }; //reducer 생성
 //반드시 reducer는 action의 값을 받아 initialState를 바꿔주는 역할을 하기에 인자로써, initialState와 action을 넣어준다
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case Log_In:
+    case LOG_IN:
       {
         return Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__["default"])({}, state, {
           isLoggedIn: true,
-          user: dummyUser
+          user: dummyUser,
+          loginData: action.data
         });
       }
 
-    case Log_Out:
+    case LOG_OUT:
       {
         return Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__["default"])({}, state, {
           isLoggedIn: false,
           user: null
         });
+      }
+
+    case SIGN_UP:
+      {
+        return Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__["default"])({}, state, {
+          signupData: action.data
+        });
+      }
+
+    case LOG_IN_SUCCESS:
+      {
+        return Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__["default"])({}, state);
+      }
+
+    case LOG_IN_FAILURE:
+      {
+        return Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__["default"])({}, state);
       }
 
     default:
@@ -1563,6 +1627,105 @@ const reducer = (state = initialState, action) => {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (reducer);
+
+/***/ }),
+
+/***/ "./sagas/index.js":
+/*!************************!*\
+  !*** ./sagas/index.js ***!
+  \************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return rootSaga; });
+/* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux-saga/effects */ "redux-saga/effects");
+/* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _user__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./user */ "./sagas/user.js");
+/* harmony import */ var _post__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./post */ "./sagas/post.js");
+
+
+
+function* rootSaga() {
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["all"])([Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(_user__WEBPACK_IMPORTED_MODULE_1__["default"]), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(_post__WEBPACK_IMPORTED_MODULE_2__["default"])]);
+}
+
+/***/ }),
+
+/***/ "./sagas/post.js":
+/*!***********************!*\
+  !*** ./sagas/post.js ***!
+  \***********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return postSaga; });
+/* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux-saga/effects */ "redux-saga/effects");
+/* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__);
+
+function* postSaga() {
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["all"])([]);
+}
+
+/***/ }),
+
+/***/ "./sagas/user.js":
+/*!***********************!*\
+  !*** ./sagas/user.js ***!
+  \***********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return userSaga; });
+/* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux-saga/effects */ "redux-saga/effects");
+/* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _reducers_user__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../reducers/user */ "./reducers/user.js");
+
+ //put은 dispatch = action을 받아서 실행하는 놈
+//take는 action을 받는 놈
+//takeEvery 는 모든 action을 다 받고 실행
+//takeLatest는 이전 요청이 끝나지 않은게 있다면 이전 요청을 취소함
+//--> 보통 로그인 버튼 여러번 클릭하면 서버에 계속 전송 되는 걸 막을 때 사용 됨
+//takeEvery VS takeLatest
+//--> takeEvery의 경우 모든 이벤트를 모두 유효처리 할 때, takeLatest는 앞선 이벤트들은 모두 실수라 보고 마지막 이벤트만 유효처리할 때
+//call과 fork 모두 함수 실행 메서드
+//call은 동기호출(보통 서버와 통신할 때 주로 쓰임)
+//fork는 비동기호출
+
+const HELLO_SAGA = 'HELLO_SAGA'; //서버에 요청 보내는 부분
+
+function loginAPI() {}
+
+function* login() {
+  try {
+    yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["delay"])(2000);
+    yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
+      type: _reducers_user__WEBPACK_IMPORTED_MODULE_1__["LOG_IN_SUCCESS"]
+    });
+  } catch (e) {
+    console.error(e);
+    yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
+      type: _reducers_user__WEBPACK_IMPORTED_MODULE_1__["LOG_IN_FAILURE"]
+    });
+  }
+}
+
+function* watchLogin() {
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["take"])(_reducers_user__WEBPACK_IMPORTED_MODULE_1__["LOG_IN"]);
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
+    type: _reducers_user__WEBPACK_IMPORTED_MODULE_1__["LOG_IN_SUCCESS"]
+  });
+}
+
+;
+function* userSaga() {
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["all"])(watchLogin(), watchSignUp());
+}
 
 /***/ }),
 
@@ -1773,6 +1936,28 @@ module.exports = require("react-redux");
 /***/ (function(module, exports) {
 
 module.exports = require("redux");
+
+/***/ }),
+
+/***/ "redux-saga":
+/*!*****************************!*\
+  !*** external "redux-saga" ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("redux-saga");
+
+/***/ }),
+
+/***/ "redux-saga/effects":
+/*!*************************************!*\
+  !*** external "redux-saga/effects" ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("redux-saga/effects");
 
 /***/ }),
 
