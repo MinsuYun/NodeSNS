@@ -38,7 +38,7 @@ function* login() {
   } catch(e) {
     console.log(e)
     yield put({
-      type: LOG_OUT_SUCCESS
+      type: LOG_OUT_FAILURE
     })
   }
 }
@@ -74,7 +74,7 @@ function* watchSignUp() {
 export default function* userSaga() {
   yield all([
     fork(watchLogin),
-    falk(watchSignUp),
+    fork(watchSignUp),
   ])
 }
 

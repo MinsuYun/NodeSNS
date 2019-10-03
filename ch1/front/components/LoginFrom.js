@@ -1,18 +1,25 @@
 import React, { useState, useCallback } from 'react';
 import { Input, Button, Form } from 'antd';
 import Link from 'next/link';
-import { useDispatch } from 'react-redux';
-import { loginAction } from '../reducers/user';
+import { useDispatch, useSelector } from 'react-redux';
+import { LOG_IN_REQUEST } from '../reducers/user';
 
 const LoginFrom = () => {
 
   const [id, setId] = useState('')
   const [password, setPassword] = useState('')
+
+  const { isLoggingIn } = useSelector(state => state.user);
   const dispatch = useDispatch();
 
   const onSubmitForm = useCallback((e) => {
     e.preventDefault();
-    dispatch(loginAction({id, password}));
+    dispatch({
+      type: LOG_IN_REQUEST,
+      data: {
+        id, password
+      }
+    })
   },[id, password])
 
   const onChangeId = useCallback((e) => {

@@ -504,22 +504,37 @@ const Home = () => {
 /*!**************************!*\
   !*** ./reducers/user.js ***!
   \**************************/
-/*! exports provided: initialState, LOG_IN, LOG_OUT, SIGN_UP, LOG_IN_SUCCESS, LOG_IN_FAILURE, loginAction, logoutAction, signupAction, loginSuccessAction, loginSuccessFailureAction, default */
+/*! exports provided: initialState, SIGN_UP_REQUEST, SIGN_UP_SUCCESS, SIGN_UP_FAILURE, LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_IN_FAILURE, LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOAD_USER_FAILURE, LOG_OUT_REQUEST, LOG_OUT_SUCCESS, LOG_OUT_FAILURE, LOAD_FOLLOW_REQUEST, LOAD_FOLLOW_SUCCESS, LOAD_FOLLOW_FAILURE, FOLLOW_USER_REQUEST, FOLLOW_USER_SUCCESS, FOLLOW_USER_FAILURE, UNFOLLOW_USER_REQUEST, UNFOLLOW_USER_SUCCESS, UNFOLLOW_USER_FAILURE, REMOVE_FOLLOWER_REQUEST, REMOVE_FOLLOWER_SUCCESS, REMOVE_FOLLOWER_FAILURE, ADD_POST_TO_ME, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initialState", function() { return initialState; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOG_IN", function() { return LOG_IN; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOG_OUT", function() { return LOG_OUT; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SIGN_UP", function() { return SIGN_UP; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SIGN_UP_REQUEST", function() { return SIGN_UP_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SIGN_UP_SUCCESS", function() { return SIGN_UP_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SIGN_UP_FAILURE", function() { return SIGN_UP_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOG_IN_REQUEST", function() { return LOG_IN_REQUEST; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOG_IN_SUCCESS", function() { return LOG_IN_SUCCESS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOG_IN_FAILURE", function() { return LOG_IN_FAILURE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loginAction", function() { return loginAction; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logoutAction", function() { return logoutAction; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "signupAction", function() { return signupAction; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loginSuccessAction", function() { return loginSuccessAction; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loginSuccessFailureAction", function() { return loginSuccessFailureAction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOAD_USER_REQUEST", function() { return LOAD_USER_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOAD_USER_SUCCESS", function() { return LOAD_USER_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOAD_USER_FAILURE", function() { return LOAD_USER_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOG_OUT_REQUEST", function() { return LOG_OUT_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOG_OUT_SUCCESS", function() { return LOG_OUT_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOG_OUT_FAILURE", function() { return LOG_OUT_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOAD_FOLLOW_REQUEST", function() { return LOAD_FOLLOW_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOAD_FOLLOW_SUCCESS", function() { return LOAD_FOLLOW_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOAD_FOLLOW_FAILURE", function() { return LOAD_FOLLOW_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FOLLOW_USER_REQUEST", function() { return FOLLOW_USER_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FOLLOW_USER_SUCCESS", function() { return FOLLOW_USER_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FOLLOW_USER_FAILURE", function() { return FOLLOW_USER_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UNFOLLOW_USER_REQUEST", function() { return UNFOLLOW_USER_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UNFOLLOW_USER_SUCCESS", function() { return UNFOLLOW_USER_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UNFOLLOW_USER_FAILURE", function() { return UNFOLLOW_USER_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_FOLLOWER_REQUEST", function() { return REMOVE_FOLLOWER_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_FOLLOWER_SUCCESS", function() { return REMOVE_FOLLOWER_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_FOLLOWER_FAILURE", function() { return REMOVE_FOLLOWER_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ADD_POST_TO_ME", function() { return ADD_POST_TO_ME; });
 /* harmony import */ var _babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/objectSpread */ "./node_modules/@babel/runtime-corejs2/helpers/esm/objectSpread.js");
 
 //dummy User
@@ -527,81 +542,132 @@ const dummyUser = {
   nickname: "윤민수",
   Post: [],
   Followings: [],
-  Followers: []
+  Followers: [],
+  id: 1
 }; //intial State
 
 const initialState = {
   isLoggedIn: false,
-  user: null,
-  signupData: {},
-  loginData: {}
-}; //Action 이름정하기
+  //로그인 여부
+  isLoggingIn: false,
+  // 로그인 시도중
+  logInErrorReason: '',
+  // 로그인 실패 사유
+  isLoggingOut: false,
+  // 로그아웃 시도중
+  isSignedUp: false,
+  //회원가입 성공,
+  isSigningUp: false,
+  //회원가입 시도중,
+  signUpErrorReason: '',
+  //회원가입 실패 사유
+  me: null,
+  //내 정보
+  followingList: [],
+  //팔로잉 리스트
+  followerList: [],
+  //팔로워 리스트
+  userInfo: null //남의 정보
 
-const LOG_IN = 'LOG_IN';
-const LOG_OUT = 'LOG_OUT';
-const SIGN_UP = 'SIGN_UP';
+}; //Action 이름 정하기
+//보통 비동기처리를 하는 Action들은 Request/Success/Failure 총 3개로 나눈다
+//회원가입
+
+const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
+const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
+const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE'; //로그인
+
+const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
 const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
-const LOG_IN_FAILURE = 'LOG_IN_FAILURE'; //Action 의 결과 적기
-//여기서 type이 정말 중요하다.
-//data 는 state값에 들어갈 데이터들을 정의해주는 곳이다.
+const LOG_IN_FAILURE = 'LOG_IN_FAILURE'; //유저정보 서버로부터 받아들이기
 
-const loginAction = data => {
-  return {
-    type: LOG_IN,
-    data: data
-  };
-};
-const logoutAction = {
-  type: LOG_OUT
-};
-const signupAction = data => {
-  return {
-    type: SIGN_UP,
-    data: data
-  };
-};
-const loginSuccessAction = {
-  type: LOG_IN_SUCCESS
-};
-const loginSuccessFailureAction = {
-  type: LOG_IN_FAILURE
-}; //reducer 생성
+const LOAD_USER_REQUEST = 'LOAD_USER_REQUEST';
+const LOAD_USER_SUCCESS = 'LOAD_USER_SUCCESS';
+const LOAD_USER_FAILURE = 'LOAD_USER_FAILURE'; //로그아웃
+
+const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST';
+const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
+const LOG_OUT_FAILURE = 'LOG_OUT_FAILURE'; //팔로잉, 팔로워 정보 서버로부터 받아들이기
+
+const LOAD_FOLLOW_REQUEST = 'LOAD_FOLLOW_REQUEST';
+const LOAD_FOLLOW_SUCCESS = 'LOAD_FOLLOW_SUCCESS';
+const LOAD_FOLLOW_FAILURE = 'LOAD_FOLLOW_FAILURE'; //팔로우 요청
+
+const FOLLOW_USER_REQUEST = 'FOLLOW_USER_REQUEST';
+const FOLLOW_USER_SUCCESS = 'FOLLOW_USER_SUCCESS';
+const FOLLOW_USER_FAILURE = 'FOLLOW_USER_FAILURE'; //팔로우 취소요청
+
+const UNFOLLOW_USER_REQUEST = 'UNFOLLOW_USER_REQUEST';
+const UNFOLLOW_USER_SUCCESS = 'UNFOLLOW_USER_SUCCESS';
+const UNFOLLOW_USER_FAILURE = 'UNFOLLOW_USER_FAILURE'; //팔로워 삭제 요청
+
+const REMOVE_FOLLOWER_REQUEST = 'REMOVE_FOLLOWER_REQUEST';
+const REMOVE_FOLLOWER_SUCCESS = 'REMOVE_FOLLOWER_SUCCESS';
+const REMOVE_FOLLOWER_FAILURE = 'REMOVE_FOLLOWER_FAILURE'; //아직 뭐하는 녀석인지는 모름
+
+const ADD_POST_TO_ME = 'ADD_POST_TO_ME'; //reducer 부분
 //반드시 reducer는 action의 값을 받아 initialState를 바꿔주는 역할을 하기에 인자로써, initialState와 action을 넣어준다
 
-const reducer = (state = initialState, action) => {
+/* harmony default export */ __webpack_exports__["default"] = ((state = initialState, action) => {
   switch (action.type) {
-    case LOG_IN:
+    case LOG_IN_REQUEST:
       {
         return Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__["default"])({}, state, {
-          isLoggedIn: true,
-          user: dummyUser,
-          loginData: action.data
-        });
-      }
-
-    case LOG_OUT:
-      {
-        return Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__["default"])({}, state, {
-          isLoggedIn: false,
-          user: null
-        });
-      }
-
-    case SIGN_UP:
-      {
-        return Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__["default"])({}, state, {
-          signupData: action.data
+          isLoggingIn: true
         });
       }
 
     case LOG_IN_SUCCESS:
       {
-        return Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__["default"])({}, state);
+        return Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__["default"])({}, state, {
+          isLoggingIn: false,
+          isLoggedIn: true,
+          me: dummyUser
+        });
       }
 
     case LOG_IN_FAILURE:
       {
-        return Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__["default"])({}, state);
+        return Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__["default"])({}, state, {
+          isLoggingIn: false,
+          isLoggedIn: false,
+          logInErrorReason: action.error,
+          me: null
+        });
+      }
+
+    case LOG_OUT_REQUEST:
+      {
+        return Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__["default"])({}, state, {
+          isLoggedIn: false,
+          me: null
+        });
+      }
+
+    case SIGN_UP_REQUEST:
+      {
+        return Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__["default"])({}, state, {
+          isSigningUp: true,
+          isSignedUp: false,
+          signUpErrorReason: ''
+        });
+      }
+
+    case SIGN_UP_SUCCESS:
+      {
+        return Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__["default"])({}, state, {
+          isSigningUp: false,
+          isSignedUp: true,
+          signUpErrorReason: ''
+        });
+      }
+
+    case SIGN_UP_FAILURE:
+      {
+        return Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__["default"])({}, state, {
+          isSigningUp: false,
+          signUpErrorReason: action.error
+        });
       }
 
     default:
@@ -609,9 +675,7 @@ const reducer = (state = initialState, action) => {
         return Object(_babel_runtime_corejs2_helpers_esm_objectSpread__WEBPACK_IMPORTED_MODULE_0__["default"])({}, state);
       }
   }
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (reducer);
+});
 
 /***/ }),
 
@@ -628,8 +692,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux-saga/effects */ "redux-saga/effects");
 /* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _reducers_user__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../reducers/user */ "./reducers/user.js");
-
- //put은 dispatch = action을 받아서 실행하는 놈
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "axios");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+//put은 dispatch = action을 받아서 실행하는 놈
 //take는 action을 받는 놈
 //takeEvery 는 모든 action을 다 받고 실행
 //takeLatest는 이전 요청이 끝나지 않은게 있다면 이전 요청을 취소함
@@ -639,35 +704,62 @@ __webpack_require__.r(__webpack_exports__);
 //call과 fork 모두 함수 실행 메서드
 //call은 동기호출(보통 서버와 통신할 때 주로 쓰임)
 //fork는 비동기호출
+ //서버로 갔다 와야하는 비동기처리 Action들은 SAGA에서 모두 처리 해준다
 
-const HELLO_SAGA = 'HELLO_SAGA'; //서버에 요청 보내는 부분
 
-function loginAPI() {}
+ //서버에 요청 보내는 부분
+
+function loginAPI() {
+  return axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/post');
+}
 
 function* login() {
   try {
+    // yield call(loginAPI);
     yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["delay"])(2000);
     yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
       type: _reducers_user__WEBPACK_IMPORTED_MODULE_1__["LOG_IN_SUCCESS"]
     });
   } catch (e) {
-    console.error(e);
+    console.log(e);
     yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
-      type: _reducers_user__WEBPACK_IMPORTED_MODULE_1__["LOG_IN_FAILURE"]
+      type: LOG_OUT_FAILURE
     });
   }
 }
 
 function* watchLogin() {
-  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["take"])(_reducers_user__WEBPACK_IMPORTED_MODULE_1__["LOG_IN"]);
-  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
-    type: _reducers_user__WEBPACK_IMPORTED_MODULE_1__["LOG_IN_SUCCESS"]
-  });
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeEvery"])(_reducers_user__WEBPACK_IMPORTED_MODULE_1__["LOG_IN_REQUEST"], login);
 }
 
 ;
+
+function signUpAPI() {
+  //서버에 요청을 보내는 부분
+  return axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/signup');
+}
+
+function* signUp() {
+  try {
+    // yield call(signUpAPI)
+    yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["delay"])(2000);
+    yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
+      type: _reducers_user__WEBPACK_IMPORTED_MODULE_1__["SIGN_UP_SUCCESS"]
+    });
+  } catch (e) {
+    yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["put"])({
+      type: _reducers_user__WEBPACK_IMPORTED_MODULE_1__["SIGN_UP_FAILURE"],
+      error: e
+    });
+  }
+}
+
+function* watchSignUp() {
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["takeEvery"])(_reducers_user__WEBPACK_IMPORTED_MODULE_1__["SIGN_UP_REQUEST"], signUp);
+}
+
 function* userSaga() {
-  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["all"])(watchLogin(), watchSignUp());
+  yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["all"])([Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchLogin), Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_0__["fork"])(watchSignUp)]);
 }
 
 /***/ }),
@@ -692,6 +784,17 @@ module.exports = __webpack_require__(/*! /home/minsu/바탕화면/sns/ch1/front/
 /***/ (function(module, exports) {
 
 module.exports = require("antd");
+
+/***/ }),
+
+/***/ "axios":
+/*!************************!*\
+  !*** external "axios" ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("axios");
 
 /***/ }),
 
