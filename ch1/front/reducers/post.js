@@ -101,7 +101,8 @@ export default  ( state = initialState, action ) => {
         ...state,
         isAddingPost : false,
         addPostErrorReason: '',
-        postAdded: true, 
+        postAdded: true,
+        mainPosts: [dummyPost, ...state.mainPosts,]
       }
     }
     case ADD_POST_FAILURE : {

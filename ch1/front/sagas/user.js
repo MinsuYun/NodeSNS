@@ -21,30 +21,32 @@ import {
   SIGN_UP_REQUEST,
   SIGN_UP_SUCCESS,
   SIGN_UP_FAILURE } from '../reducers/user';
+  
 import axios from 'axios';
 
 //서버에 요청 보내는 부분
 function loginAPI() {
-  return axios.post('/post')
+  return axios.post('/login')
 }
 
-function* login() {
+function* logIn(action) {
   try {
     // yield call(loginAPI);
+    console.log(1122221)
     yield delay(2000)
     yield put({
-      type: LOG_IN_SUCCESS
+      type: LOG_IN_SUCCESS,
     })
   } catch(e) {
     console.log(e)
     yield put({
-      type: LOG_OUT_FAILURE
+      type: LOG_IN_FAILURE,
     })
   }
 }
 
-function* watchLogin() {
-  yield takeEvery(LOG_IN_REQUEST, login);
+function* watchLogIn() {
+  yield takeEvery(LOG_IN_REQUEST, logIn);
 };
 
 function signUpAPI() {
@@ -55,7 +57,7 @@ function signUpAPI() {
 function* signUp() {
   try {
     // yield call(signUpAPI)
-    yield delay(2000)
+    yield delay(2000);
     yield put({
       type: SIGN_UP_SUCCESS
     })
@@ -73,7 +75,7 @@ function* watchSignUp() {
 
 export default function* userSaga() {
   yield all([
-    fork(watchLogin),
+    fork(watchLogIn),
     fork(watchSignUp),
   ])
 }

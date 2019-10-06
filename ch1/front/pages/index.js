@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PostForm from '../components/PostForm';
 import PostCard from '../components/PostCard';
 import {  useSelector, useDispatch } from 'react-redux';
-import userSaga from '../sagas/user'
+
  
 
 //index.js 모든 page들 중에서 첫 화면을 나타낸다.
@@ -15,7 +15,6 @@ import userSaga from '../sagas/user'
 const Home = () => {
   //dispatch는 action을 실행시키는 역할을 함
   //useSelector는 store에서 원하는 state값을 불러오는 역할을 한다.
-  const dispatch = useDispatch();
   const { isLoggedIn } = useSelector( state => state.user );
   const { mainPosts } = useSelector( state => state.post );
 

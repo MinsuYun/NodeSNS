@@ -1,4 +1,4 @@
-import { all, delay, fork, call, takeEvery, takeLateset, put } from 'redux-saga/effects';
+import { all, delay, fork, call, takeEvery, takeLatest, put } from 'redux-saga/effects';
 //무엇을 Import 해와야 하는지 생각할 것
 import {
   ADD_POST_REQUEST,
@@ -15,7 +15,7 @@ function addPostAPI() {
 
 function* addPost() {
   try {
-    yield call(addPostAPI);
+    // yield call(addPostAPI);
     yield delay(2000);
     yield put({
       type: ADD_POST_SUCCESS
@@ -56,7 +56,7 @@ function* addComment(action) {
 }
 
 function* watchAddComment() {
-  yield takeLatest(ADD_COMMENT_REQUEST, addComment)
+  yield takeEvery(ADD_COMMENT_REQUEST, addComment)
 }
 
 export default function* postSaga() {

@@ -75,7 +75,8 @@ export default (state = initialState, action ) => {
     case LOG_IN_REQUEST: {
       return {
         ...state,
-        isLoggingIn : true
+        isLoggingIn : true,
+        logInErrorReason: ''
       }
     }
     case LOG_IN_SUCCESS: {
